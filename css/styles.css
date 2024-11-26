@@ -1,17 +1,85 @@
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-h1 {
-  color: #333;
+h1, p {
+  color:rgb(92, 29, 134);
 }
+
+p {
+  font-size: 16px;
+  text-align: center;
+}
+
 #result .green {
   color: #2ecc71;
 }
 
 #result .red {
   color: #e74c3c;
+}
+
+#userInput {
+  width: 100px;
+  height: 70px;
+  background-color: rgb(178, 158, 192);
+  color: rgb(237, 234, 240);
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 0;
+  border: none;
+}
+
+
+input::placeholder {
+  color:white;
+  text-align: center;
+  font-size: 20px;
+}
+
+
+#countdown, #result {
+  width: 450px;
+  height: 40px;
+  background-color: rgb(178, 158, 192);
+  color: rgb(237, 234, 240);
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 10px;
+  padding-top: 30px 30px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#restart {
+  color:white;
+  background-color: rgb(106, 67, 133);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 30px;
+  border-radius: 5px;
+}
+
+#restart:hover {
+  color:rgb(92, 29, 134);
+  background-color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+  
 }
