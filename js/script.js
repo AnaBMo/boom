@@ -21,7 +21,7 @@ function inicioCuentaAtras() {
         let segundos = 5;
         
         function contandoAtras() {
-            if (segundos >= 0) {
+            if (segundos > 0) {
                 cuentaAtras.textContent = `Cuenta atrás: ${segundos} segundos`; 
                 segundos--;
                 setTimeout(contandoAtras, 1000); // aparece cada segundo en el contador
@@ -29,7 +29,8 @@ function inicioCuentaAtras() {
                 resolve(); // cuando segundos no sea mayor que cero, se resuelve la promesa
             }
         }
-        contandoAtras();       
+        contandoAtras();  // comienza la cuenta atrás   
+        obtenerNumeroIntroducido();  // se llama a esta función para poder introducir número durante la cuenta atrás
     }, 5000);
 }
 
@@ -44,24 +45,28 @@ function obtenerNumeroIntroducido() {
                 if (isNaN(numIntroducido) || numIntroducido < 1 || numIntroducido > 3) {
                     reject("Por favor, escribe un número válido entre 1 y 3.");
                 } else {
-                    resolve(numIntroducido); 
+                    resolve(numIntroducido);
                 }
             }
-        };   
-        numUsuarioInput.addEventListener('keypress', listener);
+        };
+        numUsuarioInput.addEventListener('keydown', listener);
     });
 }
+
 
 /* ********************************************
     Comparación de números y mostrar resultado
 ******************************************** */
 function compararNumeros(numIntroducido) {
     if (numIntroducido === undefined) {
-        resultadoComparacion.textContent = "No introdujiste un número. La bomba ha estallado.";
+        resultadoComparacion.innerHTML = "No introdujiste un número. <br> La bomba ha estallado.";
+        resultadoComparacion.style.color = "yellow"; 
     } else if (numIntroducido === numAleatorio) {
-        resultadoComparacion.textContent = `¡Has salvado el mundo! Tu número ${numIntroducido} coincide con el número ${numAleatorio}.`;
+        resultadoComparacion.innerHTML = `¡Has salvado el mundo!<br>Tu número ${numIntroducido} coincide con el número ${numAleatorio}.`;
+        resultadoComparacion.style.color = "green"; 
     } else {
-        resultadoComparacion.textContent = `La bomba ha estallado. Tu número ${numIntroducido} no es el de desactivación (${numAleatorio}).`;
+        resultadoComparacion.innerHTML = `La bomba ha estallado.<br>Tu número ${numIntroducido} no es el de desactivación ${numAleatorio}.`;
+        resultadoComparacion.style.color = "red"; 
     }
 }
 
@@ -78,17 +83,17 @@ function reiniciarJuego() {
         Secuencia
 ******************************************** */
 function iniciarJuego() {
-    resultadoComparacion.textContent = "Aquí aparecerá el resultado";
+    resultadoComparacion.textContent = "Aquí aparecerá el resultado"; // mensaje inicial antes de resolución
 
-    inicioCuentaAtras()
-        .then(() => {
-            return obtenerNumeroIntroducido();
-        })
+    // Para arrancar dos tareas al mismo tiempo, hay que poner promesa de array
+    /* Si el jugador introduce un número antes de que termine la cuenta atrás, se resuelve con ese número.
+    Si la cuenta atrás llega a 0 antes de introducir un número, la promesa se resuelve sin esperar al jugador. */
+    Promise.race([inicioCuentaAtras(), obtenerNumeroIntroducido()])
         .then((numIntroducido) => {
             compararNumeros(numIntroducido);
         })
         .catch((error) => {
-            alert(error); 
+            alert(error);
         });
 }
 
